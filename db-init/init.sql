@@ -5,8 +5,20 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(80) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(80) NOT NULL,
+    brand VARCHAR(20) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
+);
+
 -- Créer des enregistrements dans Users
 INSERT INTO users (name, email) VALUES
 ('Ada Lovelace', 'alovelace@example.com'),
 ('Adele Goldberg', 'agoldberg@example.com'),
 ('Alan Turing', 'aturing@example.com');
+
+INSERT INTO products (name, brand, price) VALUES
+('Chips', 'Lays', 5.0),
+('Cookies', 'Chips Ahoy', 10.0),
+('Candy', 'Sweet Sixteens', 100.0);

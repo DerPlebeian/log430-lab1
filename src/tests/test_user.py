@@ -1,8 +1,11 @@
 from daos.user_dao import UserDAO
+from daos.user_dao_mongo import UserDAOMongo
+import mysql.connector
 from models.user import User
+from dotenv import load_dotenv
 import time
 
-dao = UserDAO()
+dao = UserDAOMongo()
 
 def test_user_select():
     user_list = dao.select_all()

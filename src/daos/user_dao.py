@@ -25,6 +25,19 @@ class UserDAO:
         except Exception as e:
             print("Erreur : " + str(e))
 
+    def select(self, user_name):
+        self.cursor.execute(
+            "SELECT id, name, email FROM users WHERE name = %s",
+            (user_name,)
+        )
+
+        row = self.cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return User(row[0], row[1], row[2])
+
     def select_all(self):
         """ Select all users from MySQL """
         self.cursor.execute("SELECT id, name, email FROM users")
@@ -41,12 +54,19 @@ class UserDAO:
         return self.cursor.lastrowid
 
     def update(self, user):
-        """ Update given user in MySQL """
-        pass
+        self.cursor.execute(
+            "UPDATE users SET name = (%s), email = (%s) WHERE id = (%s)", (user.name, user.email, user.id)
+        )
+        self.conn.commit()
+        return self.cursor.rowcount
 
     def delete(self, user_id):
-        """ Delete user from MySQL with given user ID """
-        pass
+        self.cursor.execute(
+            "DELETE FROM users WHERE id = (%s)",
+            (user_id,)
+        )
+        self.conn.commit()
+        return self.cursor.rowcount
 
     def delete_all(self): # extra
         """ Empty users table in MySQL """
